@@ -1,0 +1,521 @@
+{
+ "_nota": "Lista de principios activos a descargar de openFDA (etiquetas de EE. UU., dominio público CC0). 'en' es el nombre genérico usado en EE. UU. Puedes añadir más líneas.",
+ "medicamentos": [
+  {
+   "es": "Paracetamol",
+   "en": "acetaminophen",
+   "clase": "Analgésico y antipirético",
+   "alias": [
+    "acetaminofén",
+    "acetaminofen"
+   ]
+  },
+  {
+   "es": "Ibuprofeno",
+   "en": "ibuprofen",
+   "clase": "Antiinflamatorio no esteroideo (AINE)",
+   "alias": []
+  },
+  {
+   "es": "Naproxeno",
+   "en": "naproxen",
+   "clase": "Antiinflamatorio no esteroideo (AINE)",
+   "alias": []
+  },
+  {
+   "es": "Ácido acetilsalicílico",
+   "en": "aspirin",
+   "clase": "AINE / antiagregante plaquetario",
+   "alias": [
+    "aspirina"
+   ]
+  },
+  {
+   "es": "Diclofenaco",
+   "en": "diclofenac",
+   "clase": "Antiinflamatorio no esteroideo (AINE)",
+   "alias": []
+  },
+  {
+   "es": "Ketorolaco",
+   "en": "ketorolac",
+   "clase": "Antiinflamatorio no esteroideo (AINE)",
+   "alias": []
+  },
+  {
+   "es": "Tramadol",
+   "en": "tramadol",
+   "clase": "Analgésico opioide",
+   "alias": []
+  },
+  {
+   "es": "Morfina",
+   "en": "morphine",
+   "clase": "Analgésico opioide",
+   "alias": []
+  },
+  {
+   "es": "Amoxicilina",
+   "en": "amoxicillin",
+   "clase": "Antibiótico (penicilina)",
+   "alias": []
+  },
+  {
+   "es": "Amoxicilina con ácido clavulánico",
+   "en": "amoxicillin and clavulanate potassium",
+   "clase": "Antibiótico (penicilina + inhibidor de betalactamasa)",
+   "alias": [
+    "amoxicilina clavulanico"
+   ]
+  },
+  {
+   "es": "Azitromicina",
+   "en": "azithromycin",
+   "clase": "Antibiótico (macrólido)",
+   "alias": []
+  },
+  {
+   "es": "Claritromicina",
+   "en": "clarithromycin",
+   "clase": "Antibiótico (macrólido)",
+   "alias": []
+  },
+  {
+   "es": "Ciprofloxacino",
+   "en": "ciprofloxacin",
+   "clase": "Antibiótico (fluoroquinolona)",
+   "alias": [
+    "ciprofloxacina"
+   ]
+  },
+  {
+   "es": "Levofloxacino",
+   "en": "levofloxacin",
+   "clase": "Antibiótico (fluoroquinolona)",
+   "alias": [
+    "levofloxacina"
+   ]
+  },
+  {
+   "es": "Cefalexina",
+   "en": "cephalexin",
+   "clase": "Antibiótico (cefalosporina)",
+   "alias": []
+  },
+  {
+   "es": "Ceftriaxona",
+   "en": "ceftriaxone",
+   "clase": "Antibiótico (cefalosporina)",
+   "alias": []
+  },
+  {
+   "es": "Doxiciclina",
+   "en": "doxycycline",
+   "clase": "Antibiótico (tetraciclina)",
+   "alias": []
+  },
+  {
+   "es": "Metronidazol",
+   "en": "metronidazole",
+   "clase": "Antibiótico / antiparasitario",
+   "alias": []
+  },
+  {
+   "es": "Nitrofurantoína",
+   "en": "nitrofurantoin",
+   "clase": "Antibiótico urinario",
+   "alias": []
+  },
+  {
+   "es": "Sulfametoxazol y trimetoprima",
+   "en": "sulfamethoxazole and trimethoprim",
+   "clase": "Antibiótico (sulfonamida)",
+   "alias": [
+    "cotrimoxazol",
+    "trimetoprim sulfametoxazol"
+   ]
+  },
+  {
+   "es": "Clindamicina",
+   "en": "clindamycin",
+   "clase": "Antibiótico (lincosamida)",
+   "alias": []
+  },
+  {
+   "es": "Aciclovir",
+   "en": "acyclovir",
+   "clase": "Antiviral",
+   "alias": []
+  },
+  {
+   "es": "Valaciclovir",
+   "en": "valacyclovir",
+   "clase": "Antiviral",
+   "alias": []
+  },
+  {
+   "es": "Oseltamivir",
+   "en": "oseltamivir",
+   "clase": "Antiviral (gripe)",
+   "alias": []
+  },
+  {
+   "es": "Fluconazol",
+   "en": "fluconazole",
+   "clase": "Antifúngico",
+   "alias": []
+  },
+  {
+   "es": "Ivermectina",
+   "en": "ivermectin",
+   "clase": "Antiparasitario",
+   "alias": []
+  },
+  {
+   "es": "Albendazol",
+   "en": "albendazole",
+   "clase": "Antiparasitario",
+   "alias": []
+  },
+  {
+   "es": "Omeprazol",
+   "en": "omeprazole",
+   "clase": "Inhibidor de la bomba de protones",
+   "alias": []
+  },
+  {
+   "es": "Pantoprazol",
+   "en": "pantoprazole",
+   "clase": "Inhibidor de la bomba de protones",
+   "alias": []
+  },
+  {
+   "es": "Famotidina",
+   "en": "famotidine",
+   "clase": "Antiácido (antagonista H2)",
+   "alias": []
+  },
+  {
+   "es": "Loperamida",
+   "en": "loperamide",
+   "clase": "Antidiarreico",
+   "alias": []
+  },
+  {
+   "es": "Ondansetrón",
+   "en": "ondansetron",
+   "clase": "Antiemético",
+   "alias": []
+  },
+  {
+   "es": "Metoclopramida",
+   "en": "metoclopramide",
+   "clase": "Antiemético / procinético",
+   "alias": []
+  },
+  {
+   "es": "Loratadina",
+   "en": "loratadine",
+   "clase": "Antihistamínico",
+   "alias": []
+  },
+  {
+   "es": "Cetirizina",
+   "en": "cetirizine",
+   "clase": "Antihistamínico",
+   "alias": []
+  },
+  {
+   "es": "Difenhidramina",
+   "en": "diphenhydramine",
+   "clase": "Antihistamínico",
+   "alias": []
+  },
+  {
+   "es": "Salbutamol",
+   "en": "albuterol",
+   "clase": "Broncodilatador",
+   "alias": [
+    "albuterol"
+   ]
+  },
+  {
+   "es": "Budesonida",
+   "en": "budesonide",
+   "clase": "Corticoide inhalado/nasal",
+   "alias": []
+  },
+  {
+   "es": "Montelukast",
+   "en": "montelukast",
+   "clase": "Antileucotrieno (asma y alergia)",
+   "alias": []
+  },
+  {
+   "es": "Prednisona",
+   "en": "prednisone",
+   "clase": "Corticoide",
+   "alias": []
+  },
+  {
+   "es": "Dexametasona",
+   "en": "dexamethasone",
+   "clase": "Corticoide",
+   "alias": []
+  },
+  {
+   "es": "Metformina",
+   "en": "metformin",
+   "clase": "Antidiabético oral",
+   "alias": []
+  },
+  {
+   "es": "Glibenclamida",
+   "en": "glyburide",
+   "clase": "Antidiabético oral (sulfonilurea)",
+   "alias": [
+    "gliburida"
+   ]
+  },
+  {
+   "es": "Insulina glargina",
+   "en": "insulin glargine",
+   "clase": "Insulina de acción prolongada",
+   "alias": []
+  },
+  {
+   "es": "Enalapril",
+   "en": "enalapril",
+   "clase": "Antihipertensivo (IECA)",
+   "alias": []
+  },
+  {
+   "es": "Losartán",
+   "en": "losartan",
+   "clase": "Antihipertensivo (ARA II)",
+   "alias": []
+  },
+  {
+   "es": "Amlodipino",
+   "en": "amlodipine",
+   "clase": "Antihipertensivo (bloqueador de calcio)",
+   "alias": [
+    "amlodipina"
+   ]
+  },
+  {
+   "es": "Hidroclorotiazida",
+   "en": "hydrochlorothiazide",
+   "clase": "Diurético",
+   "alias": []
+  },
+  {
+   "es": "Furosemida",
+   "en": "furosemide",
+   "clase": "Diurético",
+   "alias": []
+  },
+  {
+   "es": "Espironolactona",
+   "en": "spironolactone",
+   "clase": "Diurético",
+   "alias": []
+  },
+  {
+   "es": "Atenolol",
+   "en": "atenolol",
+   "clase": "Betabloqueador",
+   "alias": []
+  },
+  {
+   "es": "Metoprolol",
+   "en": "metoprolol",
+   "clase": "Betabloqueador",
+   "alias": []
+  },
+  {
+   "es": "Atorvastatina",
+   "en": "atorvastatin",
+   "clase": "Hipolipemiante (estatina)",
+   "alias": []
+  },
+  {
+   "es": "Simvastatina",
+   "en": "simvastatin",
+   "clase": "Hipolipemiante (estatina)",
+   "alias": []
+  },
+  {
+   "es": "Warfarina",
+   "en": "warfarin",
+   "clase": "Anticoagulante",
+   "alias": []
+  },
+  {
+   "es": "Clopidogrel",
+   "en": "clopidogrel",
+   "clase": "Antiagregante plaquetario",
+   "alias": []
+  },
+  {
+   "es": "Apixabán",
+   "en": "apixaban",
+   "clase": "Anticoagulante",
+   "alias": []
+  },
+  {
+   "es": "Levotiroxina",
+   "en": "levothyroxine",
+   "clase": "Hormona tiroidea",
+   "alias": []
+  },
+  {
+   "es": "Sertralina",
+   "en": "sertraline",
+   "clase": "Antidepresivo (ISRS)",
+   "alias": []
+  },
+  {
+   "es": "Fluoxetina",
+   "en": "fluoxetine",
+   "clase": "Antidepresivo (ISRS)",
+   "alias": []
+  },
+  {
+   "es": "Escitalopram",
+   "en": "escitalopram",
+   "clase": "Antidepresivo (ISRS)",
+   "alias": []
+  },
+  {
+   "es": "Amitriptilina",
+   "en": "amitriptyline",
+   "clase": "Antidepresivo tricíclico",
+   "alias": []
+  },
+  {
+   "es": "Clonazepam",
+   "en": "clonazepam",
+   "clase": "Benzodiacepina",
+   "alias": []
+  },
+  {
+   "es": "Alprazolam",
+   "en": "alprazolam",
+   "clase": "Benzodiacepina",
+   "alias": []
+  },
+  {
+   "es": "Diazepam",
+   "en": "diazepam",
+   "clase": "Benzodiacepina",
+   "alias": []
+  },
+  {
+   "es": "Quetiapina",
+   "en": "quetiapine",
+   "clase": "Antipsicótico",
+   "alias": []
+  },
+  {
+   "es": "Risperidona",
+   "en": "risperidone",
+   "clase": "Antipsicótico",
+   "alias": []
+  },
+  {
+   "es": "Gabapentina",
+   "en": "gabapentin",
+   "clase": "Anticonvulsivo / dolor neuropático",
+   "alias": []
+  },
+  {
+   "es": "Pregabalina",
+   "en": "pregabalin",
+   "clase": "Anticonvulsivo / dolor neuropático",
+   "alias": []
+  },
+  {
+   "es": "Carbamazepina",
+   "en": "carbamazepine",
+   "clase": "Anticonvulsivo",
+   "alias": []
+  },
+  {
+   "es": "Ácido valproico",
+   "en": "valproic acid",
+   "clase": "Anticonvulsivo",
+   "alias": [
+    "valproato"
+   ]
+  },
+  {
+   "es": "Levetiracetam",
+   "en": "levetiracetam",
+   "clase": "Anticonvulsivo",
+   "alias": []
+  },
+  {
+   "es": "Ciclobenzaprina",
+   "en": "cyclobenzaprine",
+   "clase": "Relajante muscular",
+   "alias": []
+  },
+  {
+   "es": "Alopurinol",
+   "en": "allopurinol",
+   "clase": "Antigotoso",
+   "alias": []
+  },
+  {
+   "es": "Colchicina",
+   "en": "colchicine",
+   "clase": "Antigotoso",
+   "alias": []
+  },
+  {
+   "es": "Tamsulosina",
+   "en": "tamsulosin",
+   "clase": "Alfa bloqueador (próstata)",
+   "alias": []
+  },
+  {
+   "es": "Finasterida",
+   "en": "finasteride",
+   "clase": "Inhibidor de 5-alfa reductasa",
+   "alias": []
+  },
+  {
+   "es": "Sildenafil",
+   "en": "sildenafil",
+   "clase": "Inhibidor de PDE5",
+   "alias": []
+  },
+  {
+   "es": "Hidroxicloroquina",
+   "en": "hydroxychloroquine",
+   "clase": "Antipalúdico / inmunomodulador",
+   "alias": []
+  },
+  {
+   "es": "Metotrexato",
+   "en": "methotrexate",
+   "clase": "Inmunosupresor / antineoplásico",
+   "alias": []
+  },
+  {
+   "es": "Ácido fólico",
+   "en": "folic acid",
+   "clase": "Vitamina",
+   "alias": []
+  },
+  {
+   "es": "Sulfato ferroso",
+   "en": "ferrous sulfate",
+   "clase": "Suplemento de hierro",
+   "alias": [
+    "hierro"
+   ]
+  }
+ ]
+}

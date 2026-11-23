@@ -1,0 +1,48 @@
+{
+ "schema": 1,
+ "built": "2026-11-23T17:41:53.954Z",
+ "notice": "Información educativa general. No reemplaza la consulta con un profesional de salud. Nuby no diagnostica, no prescribe y no calcula dosis.",
+ "packs": [
+  {
+   "id": "guia-nuby",
+   "file": "guia-nuby.json",
+   "title": "Guía rápida de Nuby",
+   "source": "Proyecto Nuby (contenido propio)",
+   "url": "",
+   "license": "Contenido propio del proyecto. Orientación general redactada de forma conservadora; NO revisada aún por un profesional de salud.",
+   "lang": "es",
+   "kind": "guia",
+   "ok": true,
+   "count": 12,
+   "retrieved": "2026-11-23T17:41:53.954Z"
+  },
+  {
+   "id": "medlineplus-es",
+   "file": "medlineplus-es.json",
+   "title": "MedlinePlus en español",
+   "source": "MedlinePlus, Biblioteca Nacional de Medicina de EE. UU. (NLM)",
+   "url": "https://medlineplus.gov/spanish/",
+   "license": "Dominio público (resúmenes de temas de salud de MedlinePlus). Fuente: MedlinePlus, Biblioteca Nacional de Medicina.",
+   "licenseUrl": "https://medlineplus.gov/copyright.html",
+   "lang": "es",
+   "kind": "temas",
+   "ok": false,
+   "count": 0,
+   "error": "modo sin conexión"
+  },
+  {
+   "id": "medicamentos-fda",
+   "file": "medicamentos-fda.json",
+   "title": "Fichas de medicamentos (FDA, EE. UU.)",
+   "source": "openFDA / DailyMed – etiquetas oficiales de medicamentos de la FDA de EE. UU.",
+   "url": "https://open.fda.gov/apis/drug/label/",
+   "license": "CC0 1.0 / dominio público. Texto original en inglés; refleja etiquetas de EE. UU. (marcas y presentaciones pueden diferir en tu país).",
+   "licenseUrl": "https://open.fda.gov/license",
+   "lang": "en",
+   "kind": "medicamentos",
+   "ok": false,
+   "error": "modo sin conexión",
+   "count": 0
+  }
+ ]
+}

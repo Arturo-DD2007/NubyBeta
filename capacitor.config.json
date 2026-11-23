@@ -1,0 +1,15 @@
+{
+  "appId": "com.nuby.asistente",
+  "appName": "Nuby",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false,
+    "backgroundColor": "#0b1020"
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_nuby",
+      "iconColor": "#67C9EF"
+    }
+  }
+}

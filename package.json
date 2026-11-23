@@ -1,0 +1,24 @@
+{
+  "name": "nuby",
+  "version": "1.6.0",
+  "private": true,
+  "description": "Nuby: mascota virtual de bienestar con chat local y recordatorios. Sin API.",
+  "scripts": {
+    "android:add": "cap add android",
+    "android:configure": "node scripts/configure-android.mjs",
+    "android:sync": "cap sync android",
+    "android:build": "cd android && ./gradlew assembleDebug",
+    "serve": "python3 -m http.server 8000 --directory www"
+  },
+  "dependencies": {
+    "@capacitor/android": "^7.0.0",
+    "@capacitor/core": "^7.0.0",
+    "@capacitor/local-notifications": "^7.0.0"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.0.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

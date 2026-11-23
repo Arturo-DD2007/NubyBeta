@@ -1,0 +1,534 @@
+{
+"_nota": "Grupos de sinónimos para la búsqueda (ayudas de búsqueda, no información médica). Sin tildes y en minúsculas.",
+"grupos": [
+[
+"presion alta",
+"hipertension",
+"presion arterial alta",
+"tension alta"
+],
+[
+"presion baja",
+"hipotension",
+"presion arterial baja"
+],
+[
+"infarto",
+"ataque cardiaco",
+"ataque al corazon",
+"infarto de miocardio"
+],
+[
+"derrame",
+"derrame cerebral",
+"accidente cerebrovascular",
+"acv",
+"ictus",
+"embolia cerebral"
+],
+[
+"azucar en la sangre",
+"azucar alta",
+"glucosa alta",
+"diabetes",
+"hiperglucemia"
+],
+[
+"azucar baja",
+"glucosa baja",
+"hipoglucemia"
+],
+[
+"gripe",
+"influenza"
+],
+[
+"resfrio",
+"resfriado",
+"catarro",
+"resfriado comun"
+],
+[
+"colesterol alto",
+"colesterol",
+"hipercolesterolemia",
+"lipidos"
+],
+[
+"dolor de cabeza",
+"cefalea",
+"jaqueca",
+"migrana"
+],
+[
+"dolor de estomago",
+"dolor abdominal",
+"dolor de barriga",
+"dolor de panza"
+],
+[
+"acidez",
+"agruras",
+"reflujo",
+"reflujo gastroesofagico",
+"erge"
+],
+[
+"infeccion urinaria",
+"infeccion de orina",
+"cistitis",
+"infecciones urinarias",
+"infecciones del tracto urinario"
+],
+[
+"covid",
+"coronavirus",
+"covid-19",
+"sars-cov-2"
+],
+[
+"sida",
+"vih",
+"virus de inmunodeficiencia humana"
+],
+[
+"cancer",
+"tumor",
+"neoplasia"
+],
+[
+"tiroides",
+"hipotiroidismo",
+"hipertiroidismo",
+"glandula tiroides"
+],
+[
+"paracetamol",
+"acetaminofen",
+"acetaminophen"
+],
+[
+"aspirina",
+"acido acetilsalicilico"
+],
+[
+"antibiotico",
+"antibioticos"
+],
+[
+"analgesico",
+"analgesicos",
+"calmantes",
+"medicamentos para el dolor"
+],
+[
+"embarazo",
+"embarazada",
+"gestacion"
+],
+[
+"bebe",
+"lactante",
+"recien nacido",
+"salud del bebe"
+],
+[
+"nino",
+"ninos",
+"pediatria",
+"salud infantil"
+],
+[
+"corazon",
+"cardiaco",
+"cardiologia",
+"enfermedades del corazon"
+],
+[
+"cerebro",
+"neurologia",
+"sistema nervioso"
+],
+[
+"piel",
+"dermatologia",
+"enfermedades de la piel"
+],
+[
+"rinon",
+"rinones",
+"renal",
+"enfermedades renales"
+],
+[
+"pulmon",
+"pulmones",
+"respiratorio",
+"enfermedades pulmonares"
+],
+[
+"higado",
+"hepatico",
+"enfermedades del higado"
+],
+[
+"huesos",
+"osteoporosis",
+"fractura",
+"fracturas"
+],
+[
+"articulaciones",
+"artritis",
+"artrosis",
+"osteoartritis"
+],
+[
+"sangre",
+"analisis de sangre",
+"examen de sangre",
+"hemograma",
+"pruebas de sangre"
+],
+[
+"analisis",
+"pruebas de laboratorio",
+"examenes de laboratorio",
+"estudios"
+],
+[
+"radiografia",
+"rayos x"
+],
+[
+"ecografia",
+"ultrasonido"
+],
+[
+"tomografia",
+"tac",
+"tomografia computarizada"
+],
+[
+"resonancia",
+"resonancia magnetica",
+"irm"
+],
+[
+"vitamina",
+"vitaminas",
+"suplementos dieteticos"
+],
+[
+"nutricion",
+"alimentacion",
+"dieta",
+"comer sano"
+],
+[
+"obesidad",
+"sobrepeso",
+"peso"
+],
+[
+"depresion",
+"tristeza profunda",
+"deprimido",
+"deprimida"
+],
+[
+"ansiedad",
+"angustia",
+"nervios",
+"ataque de panico",
+"panico"
+],
+[
+"insomnio",
+"no puedo dormir",
+"trastornos del sueno",
+"sueno"
+],
+[
+"primeros auxilios",
+"emergencia",
+"urgencia",
+"emergencias medicas"
+],
+[
+"quemadura",
+"quemaduras"
+],
+[
+"herida",
+"heridas",
+"cortes",
+"lesiones"
+],
+[
+"alergia",
+"alergias",
+"alergico"
+],
+[
+"asma",
+"silbido en el pecho",
+"sibilancias"
+],
+[
+"epilepsia",
+"convulsiones",
+"ataques epilepticos"
+],
+[
+"demencia",
+"alzheimer",
+"perdida de memoria"
+],
+[
+"varicela",
+"culebrilla",
+"herpes zoster"
+],
+[
+"dengue",
+"zika",
+"chikungunya",
+"enfermedades transmitidas por mosquitos"
+],
+[
+"chagas",
+"enfermedad de chagas"
+],
+[
+"tuberculosis",
+"tbc",
+"tb"
+],
+[
+"hepatitis",
+"hepatitis a",
+"hepatitis b",
+"hepatitis c"
+],
+[
+"diarrea",
+"deposiciones liquidas",
+"diarrea aguda"
+],
+[
+"vomito",
+"vomitos",
+"nauseas"
+],
+[
+"anemia",
+"falta de hierro",
+"hierro bajo"
+],
+[
+"ojos",
+"vista",
+"vision",
+"oftalmologia",
+"problemas de la vista"
+],
+[
+"oidos",
+"audicion",
+"sordera",
+"otitis",
+"infecciones del oido"
+],
+[
+"dientes",
+"salud dental",
+"caries",
+"odontologia"
+],
+[
+"menstruacion",
+"regla",
+"periodo menstrual"
+],
+[
+"menopausia",
+"climaterio"
+],
+[
+"prostata",
+"enfermedades de la prostata"
+],
+[
+"vacuna",
+"vacunas",
+"inmunizacion"
+],
+[
+"fumar",
+"tabaco",
+"dejar de fumar",
+"tabaquismo"
+],
+[
+"alcohol",
+"alcoholismo",
+"consumo de alcohol"
+],
+[
+"drogas",
+"abuso de sustancias",
+"adicciones"
+],
+[
+"efectos secundarios",
+"reacciones adversas",
+"efectos adversos"
+],
+[
+"interacciones",
+"interacciones medicamentosas",
+"mezclar medicamentos"
+],
+[
+"contraindicaciones",
+"no usar si",
+"cuando no tomar"
+],
+[
+"infeccion",
+"infecciones",
+"bacterias",
+"virus"
+],
+[
+"hongos",
+"micosis",
+"infecciones por hongos"
+],
+[
+"parasitos",
+"lombrices",
+"gusanos intestinales"
+],
+[
+"acne",
+"granos",
+"espinillas"
+],
+[
+"dolor de espalda",
+"lumbago",
+"lumbalgia"
+],
+[
+"dolor de garganta",
+"faringitis",
+"amigdalitis"
+],
+[
+"sinusitis",
+"senos paranasales"
+],
+[
+"neumonia",
+"pulmonia"
+],
+[
+"bronquitis",
+"tos con flema"
+],
+[
+"gastritis",
+"ulcera",
+"ulcera peptica"
+],
+[
+"estrenimiento",
+"constipacion"
+],
+[
+"hemorroides",
+"almorranas"
+],
+[
+"calculos renales",
+"piedras en el rinon"
+],
+[
+"calculos biliares",
+"piedras en la vesicula",
+"vesicula"
+],
+[
+"apendicitis",
+"apendice"
+],
+[
+"anatomia",
+"cuerpo humano",
+"organos"
+],
+[
+"salud mental",
+"psicologia",
+"psiquiatria",
+"trastornos mentales"
+],
+[
+"autismo",
+"trastorno del espectro autista",
+"tea"
+],
+[
+"tdah",
+"deficit de atencion",
+"hiperactividad"
+],
+[
+"bipolar",
+"trastorno bipolar"
+],
+[
+"esquizofrenia",
+"psicosis"
+],
+[
+"suicidio",
+"prevencion del suicidio"
+],
+[
+"estres",
+"estresado",
+"estresada"
+],
+[
+"colico",
+"colicos"
+],
+[
+"fiebre",
+"temperatura alta",
+"calentura"
+],
+[
+"mareo",
+"mareos",
+"vertigo"
+],
+[
+"desmayo",
+"sincope"
+],
+[
+"palpitaciones",
+"arritmia",
+"latidos irregulares"
+],
+[
+"falta de aire",
+"disnea",
+"dificultad para respirar"
+]
+]
+}
