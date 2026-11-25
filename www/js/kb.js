@@ -281,9 +281,46 @@
     const nq = norm(q);
     const hasCue = CUE.test(nq);
     // Buscar resultados relacionados.
-    const res = search(q, { limit: 30 });
+   const res = search(q, { limit: 30 });
     let top = res[0];
     const qtok = tokens(q).length;
+
+    // Priorizar la ficha exacta de diabetes.
+    const preguntaDiabetes =
+      /\bdiabetes\b/.test(nq) &&
+      !/\b(tipo 1|tipo 2|gestacional)\b/.test(nq);
+
+    if (preguntaDiabetes) {
+      const ficha = docs.find(d => {
+        const nombres = [d.t, ...(d.a || [])];
+
+        return nombres.some(nombre =>
+          norm(nombre).trim() === 'diabetes'
+        );
+      });
+
+      if (ficha) {
+        // Seleccionar Diabetes, no Hiperglucemia.
+        top = {
+          doc: ficha,
+          score: Math.max(top ? top.score : 0, 10),
+          strong: true
+        };
+      } else {
+        // No sustituir Diabetes por otro tema.
+        return {
+          text: '📚 No encontré una ficha específica ' +
+            'sobre diabetes en mi biblioteca actual. ' +
+            'Prefiero no mostrar información sobre ' +
+            'hiperglucemia como si fuera una definición ' +
+            'de diabetes. Puedes consultar una fuente ' +
+            'médica confiable o la pestaña Salud.',
+          mood: 'confundido',
+          notFound: true,
+          aiOk: false
+        };
+      }
+    }
 
     // Identificar vitaminas específicas.
     const vitamina = /\bvitamina\s+(?:b\s?(?:12|[1235679])|[acdek])\b/.exec(nq);
