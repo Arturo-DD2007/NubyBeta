@@ -177,47 +177,87 @@
   
   /* ---------------- Fragmentos relevantes ---------------- */
   // Buscar un apartado específico dentro de una ficha médica.
+// Busca secciones verificadas de una ficha médica.
+  // Reconoce síntomas, causas, tratamientos y prevención.
   function buscarApartado(d, pregunta) {
     const texto = docText(d);
     const consulta = norm(pregunta);
 
-    // Por ahora identificamos preguntas sobre síntomas.
-    if (!/\b(sintoma|sintomas|signos)\b/.test(consulta)) {
-      return null;
-    }
+    // Identificar qué información solicita el usuario.
+    const tipos = [
+      {
+        nombre: 'síntomas',
+        pregunta: /\b(sintoma|sintomas|signos)\b/,
+        titulo: /\b(sintoma|sintomas|signos)\b/
+      },
+      {
+        nombre: 'causas',
+        pregunta: /\b(causa|causas|provoca|produce)\b|por que ocurre/,
+        titulo: /\b(causa|causas|provoca)\b/
+      },
+      {
+        nombre: 'tratamientos',
+        pregunta: /\b(tratamiento|tratamientos|tratar)\b|como se trata/,
+        titulo: /\b(tratamiento|tratamientos|como se trata)\b/
+      },
+      {
+        nombre: 'prevención',
+        pregunta: /\b(prevenir|prevencion|evitar|prevenirse)\b/,
+        titulo: /\b(prevenir|prevencion|evitar)\b/
+      }
+    ];
+
+    const tipo = tipos.find(t => t.pregunta.test(consulta));
+
+    // Si no solicita una sección específica,
+    // mantener el buscador habitual.
+    if (!tipo) return null;
 
     const lineas = texto.split(/\r?\n/);
 
-    // Buscar el encabezado de síntomas.
-    const inicio = lineas.findIndex(linea => {
-      const titulo = norm(linea.trim());
+    // Reconocer encabezados en forma de pregunta.
+    const esTitulo = linea => {
+      const t = norm(linea.trim());
+      return /^¿.{3,160}\?$/.test(t);
+    };
 
-      return /^¿.{3,140}\?$/.test(titulo) &&
-             /sintoma|signos/.test(titulo);
-    });
+    // Encontrar el apartado solicitado.
+    const inicio = lineas.findIndex(linea =>
+      esTitulo(linea) &&
+      tipo.titulo.test(norm(linea))
+    );
 
-    if (inicio === -1) return null;
+    // No mostrar otra sección como si fuera la correcta.
+    if (inicio === -1) {
+      return 'No encontré un apartado específico sobre ' +
+        tipo.nombre +
+        ' en esta ficha médica. Puedes revisar la ficha completa.';
+    }
 
     const contenido = [];
+    let longitud = 0;
 
     for (let i = inicio + 1; i < lineas.length; i++) {
       const linea = lineas[i].trim();
 
-      // Terminar cuando comienza otro apartado.
-      if (/^¿.{3,140}\?$/.test(norm(linea))) {
-        break;
-      }
+      // Detenerse al llegar al siguiente apartado.
+      if (esTitulo(linea)) break;
 
-      if (linea) contenido.push(linea);
+      if (!linea) continue;
 
-      if (contenido.join(' ').length > 1000) {
-        break;
-      }
+      // Limitar el texto sin cortar una línea a la mitad.
+      if (longitud + linea.length > 1100) break;
+
+      contenido.push(linea);
+      longitud += linea.length + 1;
     }
 
-    if (!contenido.length) return null;
+    if (!contenido.length) {
+      return 'El apartado de ' + tipo.nombre +
+        ' no contiene información suficiente para mostrar un resumen.';
+    }
 
-    return contenido.join('\n').slice(0, 1000);
+    return contenido.join('\n');
   }
   
   function snippet(d, q, maxSent) {
