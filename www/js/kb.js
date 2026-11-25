@@ -220,32 +220,6 @@
       .slice(0, 520);
   }
 
-    // Para otras preguntas, buscar las frases
-    // que mejor coincidan con la consulta.
-    const qt = new Set(expand(q).terms.keys());
-
-    const scored = sents.map((s, i) => ({
-      i,
-      s,
-      sc: tokens(s).filter(t => qt.has(t)).length
-          + (i === 0 ? 0.8 : 0)
-    }));
-
-    const pick = scored.slice()
-      .sort((a, b) => b.sc - a.sc)
-      .slice(0, maxSent)
-      .sort((a, b) => a.i - b.i);
-
-    let out = pick.map(x => x.s).join(' ');
-
-    if (out.length > 520) {
-      out = out.slice(0, 500)
-        .replace(/\s\S*$/, '') + '…';
-    }
-
-    return out;
-  }
-
   function packOf(d) { return (manifest && (manifest.packs || []).find(p => p.id === d.pack)) || {}; }
 
   function sourceLine(d) {
