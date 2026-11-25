@@ -447,7 +447,19 @@
     } else {
       body = '📘 ' + d.t + '\n' + snippet(d, q, 3);
     }
-    const others = res.slice(1, 4).filter(r => r.score > top.score * 0.45).map(r => r.doc.t);
+// Recomendar otras fichas sin repetir la ficha principal.
+    const otrosIds = new Set([d.id]);
+
+    const others = res
+      .filter(r => r.doc.id !== d.id)
+      .filter(r => r.score > top.score * 0.45)
+      .filter(r => {
+        if (otrosIds.has(r.doc.id)) return false;
+        otrosIds.add(r.doc.id);
+        return true;
+      })
+      .slice(0, 3)
+      .map(r => r.doc.t);
     let text = body + '\n\n— ' + sourceLine(d) + '\n' + EDU_NOTE;
     if (others.length) text += '\n\nTambién tengo: ' + others.join(' · ');
     return { text, mood: 'medico', kb: d.id };
