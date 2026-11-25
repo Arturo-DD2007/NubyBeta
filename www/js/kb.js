@@ -174,6 +174,7 @@
     return out.slice(0, opt.limit || 20);
   }
 
+  
   /* ---------------- Fragmentos relevantes ---------------- */
   function snippet(d, q, maxSent) {
     maxSent = maxSent || 3;
