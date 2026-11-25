@@ -48,8 +48,13 @@
       name: (N.store.read('settings', {}).name || '').slice(0, 30),
       now: now.toLocaleDateString('es', { weekday: 'long', day: 'numeric', month: 'long' }) + ', ' + U.pad(now.getHours()) + ':' + U.pad(now.getMinutes())
     };
-    const messages = history.filter(m => m && !m.urgent && !m.private && typeof m.text === 'string').slice(-12)
-      .map(m => ({ role: m.role === 'user' ? 'user' : 'bot', text: m.text.slice(0, 1000) }));
+    // Lista de permiso explícito: los mensajes antiguos sin aiAllowed no salen del teléfono.
+    // Es una defensa adicional a la clasificación que realiza chat.js.
+    const messages = history
+      .filter(m => m && m.aiAllowed === true && !m.urgent && !m.private &&
+        (m.role === 'user' || m.role === 'bot') && typeof m.text === 'string')
+      .slice(-12)
+      .map(m => ({ role: m.role, text: m.text.slice(0, 1000) }));
     const data = await call('/chat', { method: 'POST', body: JSON.stringify({ messages, context }) });
     if (!data || typeof data.reply !== 'string' || !data.reply.trim()) { const e = new Error('Respuesta vacía'); e.code = 'empty'; throw e; }
     return { text: data.reply.trim(), mood: (N.mascot.EXPRESSIONS || []).includes(data.mood) ? data.mood : 'principal', model: data.model };
