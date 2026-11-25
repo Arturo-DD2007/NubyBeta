@@ -447,6 +447,31 @@
    const res = search(q, { limit: 30 });
     let top = res[0];
     const qtok = tokens(q).length;
+     // Priorizar la ficha principal Asma en preguntas generales.
+    const preguntaAsma =
+      /\b(que es|que significa|definicion de|explicame que es|hablame de)\s+(?:el\s+)?asma\b/.test(nq);
+
+    if (preguntaAsma) {
+      const fichaAsma = docs.find(d =>
+        norm(d.t).trim() === 'asma'
+      );
+
+      if (fichaAsma) {
+        top = {
+          doc: fichaAsma,
+          score: Math.max(top ? top.score : 0, 10),
+          strong: true
+        };
+      } else {
+        return {
+          text: '📚 No encontré la ficha principal de Asma ' +
+            'en mi biblioteca médica actual.',
+          mood: 'medico',
+          private: true,
+          aiOk: false
+        };
+      }
+    }
     // Priorizar la ficha principal del VIH en preguntas de definición.
     const preguntaVIH =
       /\b(que es|que significa|definicion de|explicame que es|hablame de)\s+(?:el\s+)?vih\b/.test(nq);
