@@ -179,6 +179,7 @@
     maxSent = maxSent || 3;
 
     const text = docText(d);
+
     const sents = text
       .split(/(?<=[.!?])\s+|\n+/)
       .map(s => s.trim())
@@ -188,21 +189,36 @@
 
     const pregunta = norm(q);
 
-    // Si el usuario pide una definición, priorizar
-    // la introducción de la ficha médica.
+    // Las preguntas de definición usan primero
+    // la introducción de la ficha.
     const pideDefinicion =
-      /\b(que es|que son|que significa|definicion de)\b/.test(pregunta);
+      /\b(que es|que son|que significa|definicion de)\b/
+        .test(pregunta);
 
     if (pideDefinicion) {
-      let intro = sents.slice(0, maxSent).join(' ');
-
-      if (intro.length > 520) {
-        intro = intro.slice(0, 500)
-          .replace(/\s\S*$/, '') + '…';
-      }
-
-      return intro;
+      return sents.slice(0, maxSent).join(' ')
+        .slice(0, 520);
     }
+
+    // Otras preguntas conservan la búsqueda
+    // por coincidencia de palabras.
+    const qt = new Set(expand(q).terms.keys());
+
+    const scored = sents.map((s, i) => ({
+      i,
+      s,
+      sc: tokens(s).filter(t => qt.has(t)).length
+          + (i === 0 ? 0.8 : 0)
+    }));
+
+    const selected = scored
+      .sort((a, b) => b.sc - a.sc)
+      .slice(0, maxSent)
+      .sort((a, b) => a.i - b.i);
+
+    return selected.map(x => x.s).join(' ')
+      .slice(0, 520);
+  }
 
     // Para otras preguntas, buscar las frases
     // que mejor coincidan con la consulta.
