@@ -345,19 +345,139 @@
   /* ---------------- Interfaz ---------------- */
   const $ = id => document.getElementById(id);
 
+  
+  // Muestra mensajes normales y bloques de código.
+  // Usa textContent para evitar ejecutar HTML recibido de la IA.
   function append(role, text, urgent, ai, kb) {
     const el = document.createElement('div');
-    el.className = 'bubble ' + role + (urgent ? ' urgent' : '') + (ai ? ' ai' : '');
-    el.textContent = text;
+
+    el.className = 'bubble ' + role +
+      (urgent ? ' urgent' : '') +
+      (ai ? ' ai' : '');
+
+    const contenido = String(text || '');
+
+    // Reconocer bloques Markdown con tres comillas invertidas.
+    const patronCodigo = /```([^\r\n`]*)\r?\n([\s\S]*?)```/g;
+
+    let posicion = 0;
+    let coincidencia;
+
+    // Agregar texto normal conservando los saltos de línea.
+    function agregarTexto(valor) {
+      if (!valor) return;
+
+      const parte = document.createElement('span');
+      parte.textContent = valor;
+      parte.style.whiteSpace = 'pre-wrap';
+      parte.style.overflowWrap = 'anywhere';
+
+      el.appendChild(parte);
+    }
+
+    // Construir un bloque visual de código seguro.
+    function agregarCodigo(lenguaje, codigo) {
+      const bloque = document.createElement('div');
+
+      bloque.style.margin = '12px 0';
+      bloque.style.borderRadius = '10px';
+      bloque.style.overflow = 'hidden';
+      bloque.style.background = '#172033';
+      bloque.style.border = '1px solid #35435b';
+
+      // Cabecera con lenguaje y botón para copiar.
+      const cabecera = document.createElement('div');
+
+      cabecera.style.display = 'flex';
+      cabecera.style.justifyContent = 'space-between';
+      cabecera.style.alignItems = 'center';
+      cabecera.style.gap = '10px';
+      cabecera.style.padding = '8px 12px';
+      cabecera.style.background = '#243149';
+
+      const etiqueta = document.createElement('span');
+      etiqueta.textContent = lenguaje.trim() || 'Código';
+      etiqueta.style.fontSize = '12px';
+      etiqueta.style.color = '#cbd5e1';
+
+      const copiar = document.createElement('button');
+      copiar.type = 'button';
+      copiar.textContent = '📋 Copiar';
+      copiar.style.cursor = 'pointer';
+      copiar.style.padding = '5px 9px';
+      copiar.style.borderRadius = '6px';
+      copiar.style.border = '1px solid #64748b';
+      copiar.style.background = '#334155';
+      copiar.style.color = '#ffffff';
+      copiar.style.fontSize = '12px';
+
+      copiar.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(codigo);
+          copiar.textContent = '✅ Copiado';
+        } catch (error) {
+          copiar.textContent = 'No se pudo copiar';
+        }
+      });
+
+      cabecera.appendChild(etiqueta);
+      cabecera.appendChild(copiar);
+
+      // Contenido del código.
+      const pre = document.createElement('pre');
+      const code = document.createElement('code');
+
+      code.textContent = codigo.replace(/^\n+|\n+$/g, '');
+
+      pre.style.margin = '0';
+      pre.style.padding = '12px';
+      pre.style.overflowX = 'auto';
+      pre.style.whiteSpace = 'pre';
+      pre.style.fontFamily = 'Consolas, monospace';
+      pre.style.fontSize = '13px';
+      pre.style.lineHeight = '1.6';
+      pre.style.color = '#e2e8f0';
+
+      pre.appendChild(code);
+      bloque.appendChild(cabecera);
+      bloque.appendChild(pre);
+
+      el.appendChild(bloque);
+    }
+
+    // Separar explicaciones y ejemplos de código.
+    while ((coincidencia = patronCodigo.exec(contenido)) !== null) {
+      agregarTexto(
+        contenido.slice(posicion, coincidencia.index)
+      );
+
+      agregarCodigo(coincidencia[1], coincidencia[2]);
+
+      posicion = patronCodigo.lastIndex;
+    }
+
+    // Mostrar el texto restante.
+    agregarTexto(contenido.slice(posicion));
+
+    // Mantener el botón original de la biblioteca médica.
     if (kb) {
       const b = document.createElement('button');
-      b.type = 'button'; b.className = 'kb-open'; b.textContent = '📖 Ver ficha completa';
-      b.addEventListener('click', () => N.library.openFromChat(kb));
+
+      b.type = 'button';
+      b.className = 'kb-open';
+      b.textContent = '📖 Ver ficha completa';
+
+      b.addEventListener('click', () => {
+        N.library.openFromChat(kb);
+      });
+
       el.appendChild(b);
     }
+
     $('messages').appendChild(el);
     $('messages').scrollTop = $('messages').scrollHeight;
   }
+
 
   function persist() { history = history.slice(-100); N.store.save('history', history); }
 
