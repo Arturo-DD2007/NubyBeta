@@ -269,21 +269,46 @@
     for (const it of INTENTS) {
       if (it.local && !/dosis|diagnostic/.test(it.re.source) && it.re.test(ns)) return { text: it.fn(ns, raw), mood: it.mood };
     }
-    // Biblioteca médica local: solo responde con texto verificado y con fuente
+     
+    // Detectar conversaciones sobre exámenes académicos.
+    // No confundirlas con consultas médicas.
+    const examenAcademico =
+      /\b(examen|prueba|parcial|materia|universidad|colegio|clase|tarea)\b/.test(ns) &&
+      /\b(me fue|reprobe|aprobar|nota|profesor|estudiar|estudie|universidad|colegio|materia|clase|tarea|parcial)\b/.test(ns) &&
+      !/\b(sangre|orina|medicamento|medicina|clinico|laboratorio|salud|dolor|sintoma|diagnostico|vitamina|enfermedad|tratamiento|analisis|embarazo)\b/.test(ns);
+     
+    // Biblioteca médica local.
+    // Evitar respuestas médicas para exámenes académicos.
     let kbMiss = null;
-    if (N.kb) { const k = N.kb.answer(raw); if (k && !k.notFound) return k; kbMiss = k; }
-    if (!N.kb || N.kb.status() !== 'ready') {
-      const topic = N.health.findTopic(ns);
-      if (topic) { N.health.showTopic(topic.id); return { text: N.health.summary(topic), mood: 'medico' }; }
+
+    if (!examenAcademico && N.kb) {
+      const k = N.kb.answer(raw);
+
+      if (k && !k.notFound) {
+        return k;
+      }
+
+      kbMiss = k;
     }
 
-    for (const it of INTENTS) {
-      if (it.re.test(ns)) return { text: it.fn(ns, raw), mood: it.mood, aiOk: !it.local };
+    // Buscar temas médicos locales cuando la biblioteca
+    // no está disponible y no es una consulta académica.
+    if (
+      !examenAcademico &&
+      (!N.kb || N.kb.status() !== 'ready')
+    ) {
+      const topic = N.health.findTopic(ns);
+
+      if (topic) {
+        N.health.showTopic(topic.id);
+
+        return {
+          text: N.health.summary(topic),
+          mood: 'medico'
+        };
+      }
     }
-    if (kbMiss) return kbMiss;   // pregunta médica sin ficha: se dice, no se inventa
-    if (/\b(me duele|dolor|siento mal|malestar|sintoma|enfermo|enferma)\b/.test(ns)) {
-      return { text: 'Siento que no te sientas bien 💙. Cuéntame un poco más (por ejemplo «dolor de cabeza», «fiebre», «dolor de estómago») o revisa la pestaña Salud.\nSi el malestar es fuerte, empeora rápido o te asusta, busca atención médica.', mood: 'enfermizo' };
-    }
+    
     // ¿Pregunta inesperada? → sorprendido. ¿Frase no reconocida? → confundido.
     if (/\?/.test(raw) || /^(que|como|por que|porque|cuando|donde|cual|quien|cuanto|sabes|puedes|has)\b/.test(ns)) {
       return { text: pick(['¡Oh! 😮 Esa pregunta me tomó por sorpresa. Todavía no sé responderla, pero puedo ayudarte con recordatorios, consejos de bienestar o una charla.',
