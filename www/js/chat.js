@@ -14,7 +14,14 @@
   // Privacidad por defecto: una consulta relacionada con salud se atiende localmente.
   // Esta lista es conservadora; no sustituye pruebas ni una auditoría de privacidad.
   const PRIVATE_HEALTH = /\b(sintom\w*|signos?|diagnos\w*|enferm\w*|dolor\w*|fiebre|tos|medic\w*|pastilla\w*|farmac\w*|dosis|insulina|paracetamol|antibiotic\w*|tratamient\w*|terapia\w*|diabet\w*|hiperglucem\w*|glucos\w*|sangre|orina|embaraz\w*|hospital\w*|urgencia\w*|emergencia\w*|salud|vitamin\w*|suplement\w*|alergi\w*|infeccion\w*|cancer|depres\w*|ansiedad|suicid\w*|lastimarme|respirar|ahogo|convulsi\w*|recordatori\w*|recuerdame|avisame|presion arterial|me siento mal)\b/;
-  const isSensitive = text => PRIVATE_HEALTH.test(norm(text));
+// Protección adicional para consultas sensibles.
+  const PRIVATE_EXTRA =
+    /\b(vih|sida|asma|hipertens\w*|hipotens\w*|presion alta|presion baja|cardiac\w*|infarto|ictus|derrame cerebral|epilepsia|migra[nñ]\w*|neumonia|tuberculosis|anemia|colesterol|tiroides|hipotiroid\w*|hipertiroid\w*|artritis|autismo|tdah|trastorno\w*|psiquiatr\w*|psicolog\w*|antidepresiv\w*|vacun\w*|menstru\w*|periodo menstrual|regla menstrual)\b/;
+
+  const isSensitive = text => {
+    const t = norm(text);
+    return PRIVATE_HEALTH.test(t) || PRIVATE_EXTRA.test(t);
+  };
 
   /* ---------------- Seguridad primero ---------------- */
   const CRISIS = /(suicid|quitarme la vida|matarme|no quiero vivir|no quiero seguir viviendo|hacerme dano|lastimarme|cortarme|acabar con todo|desaparecer para siempre|mejor muert)/;
@@ -662,5 +669,5 @@
     document.querySelectorAll('[data-prompt]').forEach(b => b.addEventListener('click', () => send(b.dataset.prompt)));
   }
 
-  N.chat = { init, send, respond, clear, parseWhen, _norm: norm };
+  N.chat = { init, send, respond, clear, parseWhen, _norm: norm, isSensitive };
 })(window.Nuby);
