@@ -272,6 +272,32 @@
       return { text: '🚨 Esto puede ser una emergencia. ' + emergencyLine() + ' Si puedes, avisa a alguien cercano y no te quedes solo/a. No esperes una respuesta de esta aplicación.', mood: 'alert', urgent: true };
     }
 
+// Orientación local para una consulta personal sobre asma.
+    // Las emergencias se comprueban antes de este bloque.
+    const consultaPersonalAsma =
+      /\b(tengo|padezco|sufro de|me diagnosticaron)\b.{0,45}\basma\b/.test(ns) &&
+      /\b(que hago|que puedo hacer|que debo hacer|como me cuido|necesito ayuda)\b/.test(ns);
+
+    if (consultaPersonalAsma) {
+      return {
+        text:
+          '💙 Si tienes asma, es importante seguir el plan de acción ' +
+          'que te haya indicado tu médico.\n\n' +
+          '• Utiliza tus medicamentos solamente según las indicaciones recibidas.\n' +
+          '• Identifica y evita, cuando sea posible, los factores que desencadenan tus síntomas.\n' +
+          '• Si tus síntomas empeoran o necesitas tu medicamento de rescate ' +
+          'con más frecuencia de lo habitual, busca valoración médica.\n' +
+          '• Si tienes dificultad intensa para respirar, no puedes hablar ' +
+          'con normalidad o no mejoras siguiendo tu plan de emergencia, ' +
+          'busca atención médica urgente.\n\n' +
+          'No puedo evaluar tu situación desde el chat ni sustituir ' +
+          'la atención de un profesional.',
+        mood: 'medico',
+        private: true,
+        aiOk: false
+      };
+    }
+    
     if (pending) { const r = continuePending(raw, ns); if (r) return { text: r[0], mood: r[1] }; pending = null; }
 
     if (TRIGGER.test(ns)) { const r = handleReminder(raw, ns); return { text: r[0], mood: r[1] }; }
