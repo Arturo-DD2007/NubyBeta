@@ -377,13 +377,61 @@
         };
       }
 
+      // Buscar explicaciones sobre las causas de cada tipo.
+      const explicarTipo = (ficha, numero) => {
+        const frases = docText(ficha)
+          .split(/(?<=[.!?])\s+|\n+/)
+          .map(s => s.trim())
+          .filter(s => s.length >= 35 && s.length <= 450);
+
+        // Identificar las características específicas.
+        const patrones = numero === 1
+          ? [
+              /sistema inmun/,
+              /destruy|atac/,
+              /no produc|deja de produc|poca insulina/
+            ]
+          : [
+              /resisten/,
+              /no (?:utiliza|usa|responde)/,
+              /no produc.*suficient|no puede.*suficient/
+            ];
+
+        const candidatos = frases
+          .map((frase, i) => {
+            const f = norm(frase);
+            const relevancia = patrones.reduce(
+              (n, re) => n + (re.test(f) ? 2 : 0), 0
+            );
+            return { frase, i, relevancia };
+          })
+          .filter(x => x.relevancia > 0);
+
+        candidatos.sort(
+          (a, b) => b.relevancia - a.relevancia || a.i - b.i
+        );
+
+        if (!candidatos.length) {
+          return 'No encontré una explicación específica ' +
+            'y verificable sobre el mecanismo de este tipo ' +
+            'en la ficha local.';
+        }
+
+        return candidatos
+          .slice(0, 2)
+          .sort((a, b) => a.i - b.i)
+          .map(x => x.frase)
+          .join(' ');
+      };
+
+      // Construir la comparación con fuentes verificadas.
       const texto =
-        '📘 Diabetes tipo 1 y diabetes tipo 2\n\n' +
+        '📘 Diferencias entre diabetes tipo 1 y tipo 2\n\n' +
         '🔹 DIABETES TIPO 1\n' +
-        snippet(tipo1, '¿Qué es la diabetes tipo 1?', 2) +
+        explicarTipo(tipo1, 1) +
         '\n— ' + sourceLine(tipo1) +
         '\n\n🔹 DIABETES TIPO 2\n' +
-        snippet(tipo2, '¿Qué es la diabetes tipo 2?', 2) +
+        explicarTipo(tipo2, 2) +
         '\n— ' + sourceLine(tipo2) +
         '\n\n' + EDU_NOTE;
 
