@@ -219,15 +219,13 @@
     { re: /\b(quien eres|como te llamas|tu nombre|que eres)\b/, mood: 'principal', fn: () => '¡Soy Nuby! Una nubecita virtual que te acompaña, te da ánimos y te ayuda a recordar tus cosas ☁️💙' },
     {
       local: true,
-      re: /\b(eres (una )?ia|inteligencia artificial|chatgpt|eres un robot|eres real)\b/,
+      re: /\b(eres (una )?ia|inteligencia artificial|chatgpt|eres un robot|eres real|utilizas gemini|usas gemini|funcionas con gemini)\b/,
       mood: 'principal',
       fn: () =>
-        '¡Soy Nuby, una nubecita virtual! ☁️💙 ' +
-        'Sin internet puedo responder preguntas sencillas, ' +
-        'ayudarte con recordatorios y consultar mi biblioteca médica. ' +
-        'Cuando activas Gemini y tienes conexión, también puedo ' +
-        'conversar contigo mediante inteligencia artificial. ' +
-        'Las consultas médicas se atienden de forma local.'
+        '¡Sí! ☁️💙 Cuando tienes internet y activas la IA, utilizo Gemini ' +
+        'para conversar de forma más natural. Pero también tengo un modo ' +
+        'local que funciona sin conexión, con respuestas programadas, ' +
+        'recordatorios y mi biblioteca médica.'
     },
     { re: /\b(quien te (creo|hizo)|tu creador)\b/, mood: 'feliz', fn: () => 'Me creó alguien que quería cuidar su bienestar y el de los demás 💙' },
     { re: /\b(triste|deprimid|me siento sol[oa]|soledad|llorar|lloro|llorando|desanimad|me siento mal emocionalmente|vacio)\b/, mood: 'preocupado',
