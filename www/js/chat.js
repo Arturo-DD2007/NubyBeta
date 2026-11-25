@@ -513,6 +513,53 @@
     kbReady.then(() => { busy = false; reply(text); });
   }
 
+
+  // Respuestas generales cuando Gemini no está disponible.
+  function respuestaSinConexion(texto) {
+    const ns = norm(texto).trim();
+
+    if (/\b(como estas|que tal estas|como te va)\b/.test(ns)) {
+      return {
+        text: '¡Holaaa! ☁️💙 Estoy muy bien, feliz de acompañarte. ¿Y tú cómo estás?',
+        mood: 'feliz'
+      };
+    }
+
+    if (/^(hola|holi|holis|buenas|buenos dias|buenas tardes|buenas noches|hey)\b/.test(ns)) {
+      return {
+        text: '¡Hola, hola! ☁️💙 Qué alegría verte. ¿Qué te gustaría hacer hoy?',
+        mood: 'saludando'
+      };
+    }
+
+    if (/\b(chiste|hazme reir|algo gracioso)\b/.test(ns)) {
+      return {
+        text: pick(JOKES),
+        mood: 'emocionado'
+      };
+    }
+
+    if (/\b(gracias|muchas gracias|grax)\b/.test(ns)) {
+      return {
+        text: '¡De nada! ☁️💙 Me alegra poder ayudarte.',
+        mood: 'feliz'
+      };
+    }
+
+    if (/\b(adios|chau|chao|hasta luego|nos vemos)\b/.test(ns)) {
+      return {
+        text: '¡Hasta pronto! ☁️💙 Que tengas un bonito día.',
+        mood: 'saludando'
+      };
+    }
+
+    return {
+      text: '☁️ Ahora estoy en modo local. Puedo conversar de forma sencilla, ayudarte con recordatorios y consultar mi biblioteca médica. Para respuestas más completas necesito conexión a internet.',
+      mood: 'principal'
+    };
+  }
+
+  
   function reply(text) {
     const res = respond(text);
     if (!res) return;
@@ -539,18 +586,54 @@
     $('messages').appendChild(typing); $('messages').scrollTop = $('messages').scrollHeight;
     N.mascot.express('pensando', 'Mmm… déjame pensar 💭', 0);   // procesando la respuesta
 
-    // Conversación general → IA (si está activada y hay internet). Si falla, respuesta local.
+    
+    // Conversación general con Gemini.
     if (res.aiOk && N.ai && N.ai.enabled()) {
-      N.ai.ask(history).then(r => finish({ text: r.text, mood: r.mood, ai: true }, typing)).catch(err => {
-        let t = res.text;
-        if (Date.now() - aiErrorShown > 120000) {
-          aiErrorShown = Date.now();
-          t = '(☁️ No pude hablar con la IA: ' + (err && err.message ? err.message : 'error') + ' Respondo en modo local.)\n\n' + t;
-        }
-        finish({ text: t, mood: res.mood }, typing);
-      });
+      N.ai.ask(history)
+        .then(r => {
+          finish({
+            text: r.text,
+            mood: r.mood,
+            ai: true
+          }, typing);
+        })
+        .catch(() => {
+          // Si falla la conexión, responder localmente.
+          const local = respuestaSinConexion(text);
+
+          const actual = history[history.length - 1];
+          if (actual && actual.role === 'user') {
+           actual.aiAllowed = false;
+           actual.private = true;
+           persist();
+          }
+
+          finish({
+            text: local.text,
+            mood: local.mood,
+            private: true
+          }, typing);
+        });
+
       return;
     }
+
+    // Si Gemini está desactivado o no hay conexión,
+    // utilizar directamente las respuestas locales.
+    if (res.aiOk) {
+      const local = respuestaSinConexion(text);
+      res.text = local.text;
+      res.mood = local.mood;
+      res.private = true;
+
+      const actual = history[history.length - 1];
+      if (actual && actual.role === 'user') {
+       actual.aiAllowed = false;
+       actual.private = true;
+       persist();
+      }
+    }
+
     const delay = res.urgent ? 150 : 700 + Math.min(900, res.text.length * 6);
     setTimeout(() => finish(res, typing), delay);
   }
