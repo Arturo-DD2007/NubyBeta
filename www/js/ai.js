@@ -51,8 +51,17 @@
     // Lista de permiso explícito: los mensajes antiguos sin aiAllowed no salen del teléfono.
     // Es una defensa adicional a la clasificación que realiza chat.js.
     const messages = history
-      .filter(m => m && m.aiAllowed === true && !m.urgent && !m.private &&
-        (m.role === 'user' || m.role === 'bot') && typeof m.text === 'string')
+      .filter(m =>
+        m &&
+        m.aiAllowed === true &&
+        !m.urgent &&
+        !m.private &&
+        (m.role === 'user' || m.role === 'bot') &&
+        typeof m.text === 'string' &&
+        N.chat &&
+        typeof N.chat.isSensitive === 'function' &&
+        !N.chat.isSensitive(m.text)
+      )
       .slice(-12)
       .map(m => ({ role: m.role, text: m.text.slice(0, 1000) }));
     const data = await call('/chat', { method: 'POST', body: JSON.stringify({ messages, context }) });
