@@ -58,35 +58,32 @@
   function setStatus(msg) { const el = $('aiStatus'); if (el) el.textContent = msg; }
 
 function updateBadge() {
-    const activo = enabled();
+  const activo = enabled();
+  const st = $('appStatus');
+  const chatHint = $('chatHint');
 
-    // Indicador superior de la aplicación.
-    const st = $('appStatus');
+  // Indicador superior.
+  if (st) {
+    const base = N.notify && N.notify.isNative()
+      ? 'App Android'
+      : 'Web';
 
-    if (st) {
-      const base = N.notify && N.notify.isNative()
-        ? 'App Android'
-        : 'Web';
-
-      st.textContent = activo
-        ? '● ' + base + ' · IA Gemini activada ✨'
-        : '● ' + base + ' · Modo local';
-    }
-
-    // Indicador debajo del chat.
-    const chatHint = $('chatHint');
-
-    if (chatHint) {
-      chatHint.textContent = activo
-        ? '✨ IA Gemini activada. Las conversaciones generales pueden usar inteligencia artificial. Los temas médicos y recordatorios se manejan localmente.'
-        : '☁️ Modo local: respuestas programadas sin IA. Puedes activar Gemini desde Ajustes.';
-
-      // Color visual del indicador.
-      chatHint.style.color = activo
-        ? '#80e4bb'
-        : '#a9b8d0';
-    }
+    st.textContent = activo
+      ? '● ' + base + ' · IA Gemini activada ✨'
+      : '● ' + base + ' · Modo local';
   }
+
+  // Indicador debajo del chat.
+  if (chatHint) {
+    chatHint.textContent = activo
+      ? '✨ IA Gemini activada. Nuby puede usar IA para conversaciones generales. No sustituye la atención médica.'
+      : '☁️ Modo local: respuestas programadas sin IA. Activa Gemini desde Ajustes. Nuby no es un servicio médico.';
+
+    chatHint.style.color = activo
+      ? '#80e4bb'
+      : '#a9b8d0';
+  }
+}
 
   function load() {
     const c = cfg();
