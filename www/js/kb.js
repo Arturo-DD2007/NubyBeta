@@ -344,6 +344,56 @@
   function answer(q) {
     if (status !== 'ready') return null;
     const nq = norm(q);
+    // Comparación entre diabetes tipo 1 y tipo 2.
+    const comparaDiabetes =
+      /\bdiabetes\b/.test(nq) &&
+      /\b(?:tipo\s*1|tipo\s*i)\b/.test(nq) &&
+      /\b(?:tipo\s*2|tipo\s*ii)\b/.test(nq) &&
+      /\b(diferenc\w*|compar\w*|distingu\w*|versus|vs)\b/.test(nq);
+
+    if (comparaDiabetes) {
+      const buscarTipo = numero => docs.find(d => {
+        const nombres = [d.t, ...(d.a || [])];
+        return nombres.some(nombre => {
+          const titulo = norm(nombre).trim().replace(/\s+/g, ' ');
+          return titulo === 'diabetes tipo ' + numero ||
+                 titulo === 'diabetes de tipo ' + numero ||
+                 titulo === 'diabetes mellitus tipo ' + numero;
+        });
+      });
+
+      const tipo1 = buscarTipo('1');
+      const tipo2 = buscarTipo('2');
+
+      if (!tipo1 || !tipo2) {
+        return {
+          text: '📚 Mi biblioteca no contiene las dos fichas ' +
+            'específicas necesarias para comparar la diabetes ' +
+            'tipo 1 y tipo 2 de manera confiable. ' +
+            'Prefiero no mostrarte otra enfermedad como respuesta.',
+          mood: 'medico',
+          private: true,
+          aiOk: false
+        };
+      }
+
+      const texto =
+        '📘 Diabetes tipo 1 y diabetes tipo 2\n\n' +
+        '🔹 DIABETES TIPO 1\n' +
+        snippet(tipo1, '¿Qué es la diabetes tipo 1?', 2) +
+        '\n— ' + sourceLine(tipo1) +
+        '\n\n🔹 DIABETES TIPO 2\n' +
+        snippet(tipo2, '¿Qué es la diabetes tipo 2?', 2) +
+        '\n— ' + sourceLine(tipo2) +
+        '\n\n' + EDU_NOTE;
+
+      return {
+        text: texto,
+        mood: 'medico',
+        private: true,
+        aiOk: false
+      };
+    }
     const hasCue = CUE.test(nq);
     // Buscar resultados relacionados.
    const res = search(q, { limit: 30 });
