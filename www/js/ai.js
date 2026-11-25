@@ -57,11 +57,35 @@
 
   function setStatus(msg) { const el = $('aiStatus'); if (el) el.textContent = msg; }
 
-  function updateBadge() {
+function updateBadge() {
+    const activo = enabled();
+
+    // Indicador superior de la aplicación.
     const st = $('appStatus');
-    if (!st) return;
-    const base = N.notify && N.notify.isNative() ? 'App Android' : 'Web';
-    st.textContent = enabled() ? '● ' + base + ' · IA Gemini ✨' : '● ' + base + ' · Modo local';
+
+    if (st) {
+      const base = N.notify && N.notify.isNative()
+        ? 'App Android'
+        : 'Web';
+
+      st.textContent = activo
+        ? '● ' + base + ' · IA Gemini activada ✨'
+        : '● ' + base + ' · Modo local';
+    }
+
+    // Indicador debajo del chat.
+    const chatHint = $('chatHint');
+
+    if (chatHint) {
+      chatHint.textContent = activo
+        ? '✨ IA Gemini activada. Las conversaciones generales pueden usar inteligencia artificial. Los temas médicos y recordatorios se manejan localmente.'
+        : '☁️ Modo local: respuestas programadas sin IA. Puedes activar Gemini desde Ajustes.';
+
+      // Color visual del indicador.
+      chatHint.style.color = activo
+        ? '#80e4bb'
+        : '#a9b8d0';
+    }
   }
 
   function load() {
