@@ -277,11 +277,13 @@
 
     // Conversaciones académicas: enviar a Gemini,
     // sin consultar la biblioteca médica.
+ // Reconocer preguntas académicas y de programación.
     const hablaDeEstudios =
-      /\b(examen|parcial|universidad|colegio|estudiar|estudios|profesor|materia|reprobe|aprobar|calificacion|matematicas|programacion)\b/.test(ns);
+      /\b(examen|parcial|universidad|colegio|estudiar|estudios|profesor|materia|reprobe|aprobar|calificacion|matematicas|programacion|python|javascript|java|pseint|algoritmo|algoritmos|pseudocodigo|codigo|variable|variables|funcion|funciones|bucle|bucles|for|while|do-while|delphi)\b/.test(ns);
 
+    // Reconocer vocabulario relacionado con salud.
     const hablaDeSalud =
-      /\b(sangre|orina|clinico|laboratorio|enfermedad|medicamento|vitamina|diagnostico|sintoma|dolor|fiebre|hospital|salud)\b/.test(ns);
+      /\b(sangre|orina|clinico|laboratorio|enfermedad|medicamento|vitamina|diagnostico|sintoma|sintomas|dolor|fiebre|hospital|salud|menstruacion|menstrual|embarazo|tratamiento)\b/.test(ns);
 
     if (hablaDeEstudios && !hablaDeSalud) {
       return {
