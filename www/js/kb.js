@@ -176,10 +176,60 @@
 
   
   /* ---------------- Fragmentos relevantes ---------------- */
+  // Buscar un apartado específico dentro de una ficha médica.
+  function buscarApartado(d, pregunta) {
+    const texto = docText(d);
+    const consulta = norm(pregunta);
+
+    // Por ahora identificamos preguntas sobre síntomas.
+    if (!/\b(sintoma|sintomas|signos)\b/.test(consulta)) {
+      return null;
+    }
+
+    const lineas = texto.split(/\r?\n/);
+
+    // Buscar el encabezado de síntomas.
+    const inicio = lineas.findIndex(linea => {
+      const titulo = norm(linea.trim());
+
+      return /^¿.{3,140}\?$/.test(titulo) &&
+             /sintoma|signos/.test(titulo);
+    });
+
+    if (inicio === -1) return null;
+
+    const contenido = [];
+
+    for (let i = inicio + 1; i < lineas.length; i++) {
+      const linea = lineas[i].trim();
+
+      // Terminar cuando comienza otro apartado.
+      if (/^¿.{3,140}\?$/.test(norm(linea))) {
+        break;
+      }
+
+      if (linea) contenido.push(linea);
+
+      if (contenido.join(' ').length > 1000) {
+        break;
+      }
+    }
+
+    if (!contenido.length) return null;
+
+    return contenido.join('\n').slice(0, 1000);
+  }
+  
   function snippet(d, q, maxSent) {
     maxSent = maxSent || 3;
 
     const text = docText(d);
+     // Priorizar la sección específica solicitada.
+    const apartado = buscarApartado(d, q);
+
+    if (apartado) {
+      return apartado;
+    }
 
     const sents = text
       .split(/(?<=[.!?])\s+|\n+/)
