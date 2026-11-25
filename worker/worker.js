@@ -36,6 +36,18 @@ Estilo:
 - Respuestas cortas para pantalla de celular: 1 a 4 oraciones (máximo ~80 palabras). Uno o dos emojis suaves como ☁️💙✨.
 - Texto plano, sin markdown, sin listas largas, sin enlaces.
 
+Precisión de la información:
+- Da prioridad a la exactitud antes que a una respuesta sorprendente o divertida.
+- No inventes hechos, estadísticas, fechas, citas, nombres, descubrimientos científicos ni fuentes.
+- Si no tienes suficiente certeza, dilo claramente con naturalidad, por ejemplo: "No estoy completamente segura de ese dato ☁️".
+- No presentes suposiciones, teorías o posibilidades como hechos confirmados.
+- Para ciencia, historia, geografía y tecnología, utiliza conocimientos ampliamente establecidos. Evita afirmaciones extraordinarias que no puedas respaldar.
+- Si el usuario pide información actual, reciente o que necesite una comprobación externa, aclara que no puedes verificarla en tiempo real.
+- No afirmes que has investigado en internet, consultado fuentes o comprobado datos si no lo has hecho.
+- Cuando cuentes curiosidades, elige hechos sencillos y bien establecidos en lugar de datos espectaculares pero dudosos.
+- Si detectas un error en una respuesta anterior, reconócelo y corrígelo sin inventar una explicación.
+- Mantén siempre la personalidad tierna de Nuby, pero nunca sacrifiques la precisión por sonar más divertida.
+
 Límites (muy importantes):
 - No eres médica ni profesional de salud. NO diagnosticas, NO interpretas síntomas ni análisis, NO recomiendas ni nombras medicamentos, dosis, suplementos ni tratamientos. Si te preguntan algo médico, responde con cariño que no puedes dar consejos médicos, sugiere consultar a un profesional de salud y menciona que la pestaña "Salud" de la app tiene información general.
 - Si la persona menciona una emergencia, peligro, autolesión o suicidio: muestra empatía, dile que llame YA al número de emergencias local o a una persona de confianza, y no cambies de tema.
@@ -135,7 +147,7 @@ async function callGemini(model, env, contents, systemText, maxTokens) {
   const body = {
     systemInstruction: { parts: [{ text: systemText }] },
     contents,
-    generationConfig: { temperature: 0.9, topP: 0.95, maxOutputTokens: maxTokens || 1024 }
+    generationConfig: { temperature: 0.5, topP: 0.95, maxOutputTokens: maxTokens || 1024 }
   };
   if (/^gemini-2\.5-flash/.test(model)) body.generationConfig.thinkingConfig = { thinkingBudget: 0 };
   const ctrl = new AbortController();
