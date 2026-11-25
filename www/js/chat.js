@@ -217,7 +217,18 @@
     { re: /\b(adios|chau|chao|hasta luego|nos vemos|me voy|buenas noches nuby)\b/, mood: 'saludando', fn: () => pick(['¡Hasta pronto! Cuídate mucho 💙☁️', '¡Chau' + nameOr(', ') + '! Toma agüita y descansa 💧', 'Nos vemos. Aquí te espero ☁️']) },
     { re: /\b(te quiero|te amo|eres linda|eres lindo|eres tierna|eres tierno|me caes bien)\b/, mood: 'emocionado', fn: () => pick(['¡Awww! Yo también te quiero mucho 💙☁️', '¡Me sonrojo! 😊 Gracias por ser tan lindo/a conmigo.']) },
     { re: /\b(quien eres|como te llamas|tu nombre|que eres)\b/, mood: 'principal', fn: () => '¡Soy Nuby! Una nubecita virtual que te acompaña, te da ánimos y te ayuda a recordar tus cosas ☁️💙' },
-    { re: /\b(eres (una )?ia|inteligencia artificial|chatgpt|eres un robot|eres real)\b/, mood: 'principal', fn: () => 'Soy una mascota virtual con respuestas programadas. No uso internet ni inteligencia artificial: todo funciona dentro de tu teléfono 🔒☁️' },
+    {
+      local: true,
+      re: /\b(eres (una )?ia|inteligencia artificial|chatgpt|eres un robot|eres real)\b/,
+      mood: 'principal',
+      fn: () =>
+        '¡Soy Nuby, una nubecita virtual! ☁️💙 ' +
+        'Sin internet puedo responder preguntas sencillas, ' +
+        'ayudarte con recordatorios y consultar mi biblioteca médica. ' +
+        'Cuando activas Gemini y tienes conexión, también puedo ' +
+        'conversar contigo mediante inteligencia artificial. ' +
+        'Las consultas médicas se atienden de forma local.'
+    },
     { re: /\b(quien te (creo|hizo)|tu creador)\b/, mood: 'feliz', fn: () => 'Me creó alguien que quería cuidar su bienestar y el de los demás 💙' },
     { re: /\b(triste|deprimid|me siento sol[oa]|soledad|llorar|lloro|llorando|desanimad|me siento mal emocionalmente|vacio)\b/, mood: 'preocupado',
       fn: () => pick([
