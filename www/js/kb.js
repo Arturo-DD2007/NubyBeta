@@ -447,6 +447,32 @@
    const res = search(q, { limit: 30 });
     let top = res[0];
     const qtok = tokens(q).length;
+    // Priorizar la ficha principal del VIH en preguntas de definición.
+    const preguntaVIH =
+      /\b(que es|que significa|definicion de|explicame que es|hablame de)\s+(?:el\s+)?vih\b/.test(nq);
+
+    if (preguntaVIH) {
+      const fichaVIH = docs.find(d =>
+        norm(d.t).trim() === 'vih'
+      );
+
+      if (fichaVIH) {
+        top = {
+          doc: fichaVIH,
+          score: Math.max(top ? top.score : 0, 10),
+          strong: true
+        };
+      } else {
+        return {
+          text: '📚 No encontré la ficha principal sobre VIH ' +
+            'en mi biblioteca actual. Prefiero no mostrar ' +
+            'otro artículo como si fuera la respuesta exacta.',
+          mood: 'medico',
+          private: true,
+          aiOk: false
+        };
+      }
+    }
 
     // Priorizar la ficha exacta de diabetes.
     const preguntaDiabetes =
