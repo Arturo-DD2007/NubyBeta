@@ -269,7 +269,23 @@
     for (const it of INTENTS) {
       if (it.local && !/dosis|diagnostic/.test(it.re.source) && it.re.test(ns)) return { text: it.fn(ns, raw), mood: it.mood };
     }
-     
+
+    // Conversaciones académicas: enviar a Gemini,
+    // sin consultar la biblioteca médica.
+    const hablaDeEstudios =
+      /\b(examen|parcial|universidad|colegio|estudiar|estudios|profesor|materia|reprobe|aprobar|calificacion|matematicas|programacion)\b/.test(ns);
+
+    const hablaDeSalud =
+      /\b(sangre|orina|clinico|laboratorio|enfermedad|medicamento|vitamina|diagnostico|sintoma|dolor|fiebre|hospital|salud)\b/.test(ns);
+
+    if (hablaDeEstudios && !hablaDeSalud) {
+      return {
+        text: '☁️ Estoy aquí para escucharte. ¿Quieres contarme un poco más?',
+        mood: 'preocupado',
+        aiOk: true
+      };
+    }
+    
     // Detectar conversaciones sobre exámenes académicos.
     // No confundirlas con consultas médicas.
     const examenAcademico =
