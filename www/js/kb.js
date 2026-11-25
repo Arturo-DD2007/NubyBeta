@@ -222,9 +222,52 @@
     if (status !== 'ready') return null;
     const nq = norm(q);
     const hasCue = CUE.test(nq);
-    const res = search(q, { limit: 5 });
-    const top = res[0];
+    // Buscar resultados relacionados.
+    const res = search(q, { limit: 30 });
+    let top = res[0];
     const qtok = tokens(q).length;
+
+    // Identificar vitaminas específicas.
+    const vitamina = /\bvitamina\s+(?:b\s?(?:12|[1235679])|[acdek])\b/.exec(nq);
+
+    if (vitamina) {
+      const solicitada = vitamina[0]
+        .replace(/\s+/g, ' ')
+        .replace(/^vitamina b (\d+)$/, 'vitamina b$1');
+
+      // Buscar un título o sinónimo exactamente igual.
+      const fichaExacta = docs.find(d => {
+        const nombres = [d.t, ...(d.a || [])];
+
+        return nombres.some(nombre => {
+          const limpio = norm(nombre)
+            .trim()
+            .replace(/\s+/g, ' ')
+            .replace(/^vitamina b (\d+)$/, 'vitamina b$1');
+
+          return limpio === solicitada;
+        });
+      });
+
+      if (!fichaExacta) {
+        return {
+          text: '📚 No encontré una ficha específica y verificada sobre ' +
+            solicitada +
+            ' en mi biblioteca médica. Prefiero no mostrarte información de otra vitamina o suplemento como si fuera la respuesta exacta.\n\n' +
+            'Puedes consultar la pestaña Salud o una fuente médica confiable.',
+          mood: 'confundido',
+          notFound: true,
+          aiOk: false
+        };
+      }
+
+      // Priorizar la ficha específica sobre el ranking general.
+      top = {
+        doc: fichaExacta,
+        score: Math.max(top ? top.score : 0, 10),
+        strong: true
+      };
+    }
     const strongEnough = top && (top.strong || (hasCue && top.score >= 6));
     if (!strongEnough) {
       if (hasCue && (top ? top.score < 6 : true) && qtok >= 2 && looksMedical(nq)) {
