@@ -11,6 +11,11 @@
   let pending = null;       // recordatorio esperando hora
   let lastFallback = -1;
 
+  // Privacidad por defecto: una consulta relacionada con salud se atiende localmente.
+  // Esta lista es conservadora; no sustituye pruebas ni una auditoría de privacidad.
+  const PRIVATE_HEALTH = /\b(sintom\w*|signos?|diagnos\w*|enferm\w*|dolor\w*|fiebre|tos|medic\w*|pastilla\w*|farmac\w*|dosis|insulina|paracetamol|antibiotic\w*|tratamient\w*|terapia\w*|diabet\w*|hiperglucem\w*|glucos\w*|sangre|orina|embaraz\w*|hospital\w*|urgencia\w*|emergencia\w*|salud|vitamin\w*|suplement\w*|alergi\w*|infeccion\w*|cancer|depres\w*|ansiedad|suicid\w*|lastimarme|respirar|ahogo|convulsi\w*|recordatori\w*|recuerdame|avisame|presion arterial|me siento mal)\b/;
+  const isSensitive = text => PRIVATE_HEALTH.test(norm(text));
+
   /* ---------------- Seguridad primero ---------------- */
   const CRISIS = /(suicid|quitarme la vida|matarme|no quiero vivir|no quiero seguir viviendo|hacerme dano|lastimarme|cortarme|acabar con todo|desaparecer para siempre|mejor muert)/;
   const EMERGENCY = /(dolor (muy )?(fuerte |intenso |opresivo )?(en el |del )?pecho|me duele (mucho )?el pecho|presion en el pecho|no puedo respirar|no respira|dificultad (para |al )?respirar|me falta el aire|me ahogo|se ahoga|atragant|desmay|convulsi|cara caida|boca torcida|debilidad repentina|no puedo mover (el|la|un|una)|habla arrastrada|no puedo hablar|perdi la vista|sangrado (abundante|que no para)|sangra mucho|vomito sangre|perdio el conocimiento|inconsciente|no despierta|sobredosis|me trague|se trago|envenen|intoxicad|labios morados|labios azules|reaccion alergica grave|se me cierra la garganta|se le hincha la (cara|lengua|garganta)|quemadura grave|bebe (de|con) .{0,15}(fiebre|no respira)|golpe (fuerte )?en la cabeza)/;
@@ -367,7 +372,8 @@
   function finish(res, typing) {
     typing.remove();
     append('bot', res.text, res.urgent, res.ai, res.kb);
-    history.push({ role: 'bot', text: res.text, urgent: !!res.urgent, ai: !!res.ai, private: !!res.private, kb: res.kb || undefined }); persist();
+    history.push({ role: 'bot', text: res.text, urgent: !!res.urgent, ai: !!res.ai,
+      private: !!res.private, aiAllowed: !!res.ai && !isSensitive(res.text), kb: res.kb || undefined }); persist();
     const ex = res.mood || 'principal';
     const bubble = res.urgent ? 'Busca ayuda ahora mismo 💙' : pick(BUBBLES[ex] || BUBBLES.principal);
     if (res.urgent) N.mascot.express('preocupado', bubble, 9000, { alert: true });
@@ -388,9 +394,24 @@
   function reply(text) {
     const res = respond(text);
     if (!res) return;
-    // Emergencias, salud, dosis, recordatorios y datos quedan marcados como privados:
-    // NUNCA se envían a la IA, ni ahora ni como contexto después.
-    if (!res.aiOk) { history[history.length - 1].private = true; res.private = true; }
+    // Defensa adicional: aunque el buscador local no reconozca el tema,
+    // las consultas de salud no se envían a Gemini ni se usan en su historial.
+    const sensitive = isSensitive(text);
+    if (sensitive && res.aiOk) {
+      res.aiOk = false;
+      res.text = '💙 Para cuidar tu privacidad, esta consulta se atiende en modo local. ' +
+        'Puedes buscar información general en Salud → Biblioteca. ' +
+        'Si necesitas orientación para tu caso, consulta a un profesional.';
+      res.mood = 'medico';
+    }
+    const current = history[history.length - 1];
+    if (current && current.role === 'user') {
+      current.private = sensitive || !res.aiOk;
+      // Únicamente los mensajes expresamente autorizados entran al historial de Gemini.
+      current.aiAllowed = !current.private && !!res.aiOk;
+      persist();
+    }
+    if (sensitive || !res.aiOk) res.private = true;
     busy = true;
     const typing = document.createElement('div'); typing.className = 'typing'; typing.innerHTML = '<i></i><i></i><i></i>';
     $('messages').appendChild(typing); $('messages').scrollTop = $('messages').scrollHeight;
