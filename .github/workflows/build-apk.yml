@@ -110,34 +110,40 @@ jobs:
             --notes-file release-notes.md
 
   web:
-    name: Versión web (GitHub Pages, opcional)
+    name: Preparar página web
     runs-on: ubuntu-latest
-    # Si GitHub Pages no está activado, este paso falla sin afectar al APK.
-    continue-on-error: true
-    environment:
-      name: github-pages
+
     steps:
-      - uses: actions/checkout@v4
-      - name: Preparar proyecto
-        shell: bash
-        run: |
-          if [ ! -f www/index.html ]; then
-            ZIP="nuby.beta_1.4.zip"
-            if [ ! -f "$ZIP" ]; then ZIP=$(find . -maxdepth 1 -type f -iname "*.zip" -printf "%f\n" | head -n1); fi
-            if [ -z "$ZIP" ]; then echo "::error::No hay ZIP en la raíz del repositorio"; exit 1; fi
-            mkdir -p /tmp/nuby && unzip -q "$ZIP" -d /tmp/nuby
-            PKG=$(find /tmp/nuby -name package.json -not -path '*/node_modules/*' | head -n1)
-            if [ -z "$PKG" ]; then echo "::error::No encuentro package.json dentro del ZIP"; exit 1; fi
-            cp -a "$(dirname "$PKG")"/. ./
-          fi
-      - uses: actions/setup-node@v4
+      - name: Descargar repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: '22'
+
       - name: Construir biblioteca médica
         run: node scripts/build-kb.mjs
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+
+      - name: Configurar GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Subir archivos de la página
+        uses: actions/upload-pages-artifact@v3
         with:
           path: www
-      - uses: actions/deploy-pages@v4
+
+  deploy_web:
+    name: Publicar Nuby en GitHub Pages
+    needs: web
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Publicar página web
+        id: deployment
+        uses: actions/deploy-pages@v4
       
